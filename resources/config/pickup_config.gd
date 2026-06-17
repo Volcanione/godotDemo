@@ -34,3 +34,13 @@ enum  ShotPattern {
 @export_group("buff 效果")
 # 道具效果持续时间，单位为秒
 @export_range(0.0,120.0,0.1,"or_greater") var duration: float = 5.0
+# 玩家移速倍率，1.0 表示不改变，1.2 表示射速提升20%。
+@export_range(0.1,5.0,0.05,"or_greater") var move_speed_mulitplier: float = 1.0
+# 玩家射速倍率，1.0 表示不改变，1.5表示射速提升 50%。
+@export_range(0.1,5.0,0.05,"or_greater") var fire_rate_multiplier: float = 1.0
+
+@export_group("形态与弹幕")
+#玩家拾取后切换到的形态模式。
+@export var player_form_mode: PlayerFormMode = PlayerFormMode.NORMAL
+#玩家拾取后使用的弹幕模式
+@export var shot_pattern: ShotPattern = ShotPattern.NORMAL

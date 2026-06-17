@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickupConfig" format=3 uid="uid://dsyb263thh4md"]
+
+[ext_resource type="Script" uid="uid://dl8e4eofk1vub" path="res://resources/config/pickup_config.gd" id="1_mcdob"]
+[ext_resource type="Texture2D" uid="uid://bnon4mdulqy1y" path="res://resources/atlas/pickup_spical.tres" id="1_t81re"]
+
+[resource]
+script = ExtResource("1_mcdob")
+pickup_type = 2
+display_name = "强化道具"
+icon_texture = ExtResource("1_t81re")
+fire_rate_multiplier = 20.0
+player_form_mode = 1
+shot_pattern = 1
+metadata/_custom_type_script = "uid://dl8e4eofk1vub"
