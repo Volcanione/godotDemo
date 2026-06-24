@@ -26,7 +26,7 @@ func  _ready() -> void:
 
 
 #道具临近消失时开启闪烁提示
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_expiring:
 		return
 	if lifttime_timer.is_stopped():

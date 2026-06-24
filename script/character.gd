@@ -1,5 +1,6 @@
 extends CharacterBody2D
 class_name Player
+ 
 
 const NORMAL_ANIMATION_PREFIX := &"normal"
 
@@ -309,4 +310,3 @@ func _vector_to_facing_suffix(direction:Vector2) -> StringName:
 		return &"right" if direction.x > 0.0 else &"left"
 
 	return &"down" if direction.y > 0.0 else &"up"
-
