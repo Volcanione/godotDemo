@@ -2,7 +2,14 @@
 
 [ext_resource type="Script" uid="uid://clwqxhqe1ajs" path="res://script/character.gd" id="1_brl04"]
 [ext_resource type="Texture2D" uid="uid://b2xwr77qga122" path="res://resources/texture/W.png" id="1_g4qg5"]
+[ext_resource type="Shader" uid="uid://dif3areiibqiw" path="res://scene/blink.gdshader" id="2_6ar16"]
 [ext_resource type="Texture2D" uid="uid://dalftdr3wuboa" path="res://resources/texture/浮游炮.png" id="2_brl04"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ha60"]
+shader = ExtResource("2_6ar16")
+shader_parameter/blink_enabled = false
+shader_parameter/blink_speed = 12.0
+shader_parameter/hidden_ratio = 0.5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ar16"]
 atlas = ExtResource("1_g4qg5")
@@ -163,7 +170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v815p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"armed_down",
 "speed": 8.0
 }, {
@@ -180,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b7ky5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"armed_left",
 "speed": 8.0
 }, {
@@ -197,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j4c87")
 }],
-"loop": true,
+"loop": 1,
 "name": &"armed_right",
 "speed": 8.0
 }, {
@@ -214,7 +221,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j5bcj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"armed_up",
 "speed": 8.0
 }, {
@@ -231,7 +238,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hgmqf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"die",
 "speed": 8.0
 }, {
@@ -248,7 +255,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ubaqt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"normal_down",
 "speed": 8.0
 }, {
@@ -265,7 +272,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cdsks")
 }],
-"loop": true,
+"loop": 1,
 "name": &"normal_left",
 "speed": 8.0
 }, {
@@ -282,7 +289,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_333r7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"normal_right",
 "speed": 8.0
 }, {
@@ -299,7 +306,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j6x8u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"normal_up",
 "speed": 8.0
 }]
@@ -363,7 +370,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_poilg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
@@ -376,10 +383,10 @@ collision_layer = 2
 script = ExtResource("1_brl04")
 
 [node name="BodySprite2D" type="AnimatedSprite2D" parent="." unique_id=1836422723]
+material = SubResource("ShaderMaterial_0ha60")
 sprite_frames = SubResource("SpriteFrames_7umgy")
 animation = &"normal_left"
 autoplay = "normal_right"
-frame_progress = 0.9207368
 
 [node name="ArmedEcefftSprite2D" type="AnimatedSprite2D" parent="." unique_id=1271892699]
 visible = false

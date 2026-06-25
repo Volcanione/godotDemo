@@ -59,9 +59,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vle8j")
 }],
-"loop": true,
+"loop": 0,
 "name": &"death",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -79,9 +79,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8kvjy")
 }],
-"loop": true,
+"loop": 0,
 "name": &"explode",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -93,7 +93,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ekjp1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"move",
 "speed": 5.0
 }]

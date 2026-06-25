@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d05llp8d0spya"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1510370255]
+
+[node name="playerMove" type="VirtualJoystick" parent="." unique_id=1451143381]
+offset_top = 120.0
+offset_right = 248.0
+offset_bottom = 360.0
+joystick_mode = 2
+action_left = &"move_left"
+action_right = &"move_right"
+action_up = &"move_up"
+action_down = &"move_down"
+
+[node name="PlayerAtt" type="VirtualJoystick" parent="." unique_id=1344142716]
+offset_left = 360.0
+offset_top = 136.0
+offset_right = 576.0
+offset_bottom = 344.0
+joystick_mode = 2
+action_left = &"shoot_left"
+action_right = &"shoot_right"
+action_up = &"shoot_up"
+action_down = &"shoot_down"

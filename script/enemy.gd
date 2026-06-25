@@ -206,7 +206,7 @@ func _try_deal_touch_damage() -> void:
 	if touched_player == null:
 		return
 		
-	touched_player.apply_admage(touch_damage)
+	touched_player.apply_damage(touch_damage)
 	touch_damage_cooldown_left = touch_damage_interval
 	
 	
