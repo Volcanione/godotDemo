@@ -352,7 +352,7 @@ func _try_apply_explosion_damage() -> void:
 		
 		var hit_player := collider as Player
 		if hit_player != null:
-			hit_player.applay_damage(config.explosion_damage)
+			hit_player.apply_damage(config.explosion_damage)
 			continue
 			
 		var hit_enemy := collider as Enemy
