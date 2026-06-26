@@ -18,6 +18,9 @@ const WORLD_COLLISON_MASK := 1
 @onready var armed_ecefft_sprite: AnimatedSprite2D = $ArmedEcefftSprite2D
 # 射击计时器，只负责限制开火频率
 @onready var shooting_timer: Timer = $ShootingTimer
+@onready var shoot_sfx_player: AudioStreamPlayer = $AudioContainer/ShootSfxPlayer
+@onready var move_sfx_player: AudioStreamPlayer = $AudioContainer/MoveSfxPlayer
+@onready var pickup_sfx_player: AudioStreamPlayer = $AudioContainer/PickupSfxPlayer
 
 # 当前朝向后缀，对应动画名中的 up/down/left/right
 var facing_suffix: StringName = &"right"
@@ -84,16 +87,19 @@ func _physics_process(delta: float) -> void:
 	
 	if is_dead:
 		velocity = Vector2.ZERO
+		_set_move_sfx_active(false)
 		return
 	
 	# 读取四个方向的输入，并得到标准化后的八方向输入向量
 	var move_input := Input.get_vector("move_left","move_right","move_up","move_down")
 	var shoot_input := Input.get_vector("shoot_left","shoot_right","shoot_up","shoot_down")
+	var is_moveing := move_input != Vector2.ZERO
 
 	#CharacterBody2D 通过 veloctiy 配合move_and_slide() 完成移动
 	velocity = move_input * _get_effective_move_speed()
 	move_and_slide()
-
+	_set_move_sfx_active(is_moveing)
+	
 	if current_shot_pattern == PickupConfig.ShotPattern.SPIRAL:
 		_try_auto_spiral_shoot()
 	elif shoot_input != Vector2.ZERO:
@@ -139,7 +145,9 @@ func _try_shoot(shoot_input:Vector2) -> void:
 		return
 
 	var shoot_direction := shoot_input.normalized()
-	_fire_bullets(shoot_direction)
+	var has_spawned_bullet := _fire_bullets(shoot_direction)
+	if has_spawned_bullet:
+		Tools.play_sfx(shoot_sfx_player)
 	shooting_timer.start(_get_effective_fire_interval())
 
 
@@ -186,6 +194,8 @@ func apply_pickup(config:PickupConfig) ->bool:
 
 	if should_refresh_shooting_timer:
 		_refresh_shooting_timer_wait_time()
+	if applied:
+		Tools.play_sfx(pickup_sfx_player)
 
 	return applied
 
@@ -273,7 +283,9 @@ func _try_auto_spiral_shoot() -> void:
 		return
 
 	var spiral_direction := Vector2.RIGHT.rotated(spiral_phase)
-	_fire_bullets(spiral_direction)
+	var has_spawned_bullet := _fire_bullets(spiral_direction)
+	if has_spawned_bullet:
+		Tools.play_sfx(shoot_sfx_player)
 	shooting_timer.start(_get_effective_fire_interval())
 
 
@@ -372,6 +384,7 @@ func _die() -> void:
 	invincibility_time_left = 0.0
 	_set_hurt_blink_enabled(false)
 	shooting_timer.stop()
+	_set_move_sfx_active(false)
 	armed_ecefft_sprite.visible = false
 	armed_ecefft_sprite.stop()
 		
@@ -406,7 +419,42 @@ func _update_armed_effect() -> void:
 
 	if armed_ecefft_sprite.sprite_frames.has_animation(&"default"):
 		armed_ecefft_sprite.play(&"default")
+		
+		
+#主场景在结算时可调用整个接口，统一关闭玩家仍在播放的音效
+func stop_runtime_audio()->void:
+	_set_move_sfx_active(false)
+	if shoot_sfx_player != null and shoot_sfx_player.playing:
+		shoot_sfx_player.stop()
+	if pickup_sfx_player != null and pickup_sfx_player.playing:
+		pickup_sfx_player.stop()
+		
+		
+#根据移动状态启停移动音效
+func _set_move_sfx_active(active:bool) -> void:
+	if move_sfx_player == null or move_sfx_player.stream == null:
+		return
+	
+	if active:
+		if not move_sfx_player.playing:
+			move_sfx_player.play()
+		return
+		
+	if move_sfx_player.playing:
+		move_sfx_player.stop()
+		
 
+#一次性音效统一使用播放逻辑，避免快速触发时无法从头开始
+#func _play_sfx(audio_player:AudioStreamPlayer) -> void:
+	#if audio_player == null or audio_player.stream == null:
+		#return
+	#
+	#
+	#audio_player.stop()
+	#audio_player.play()
+	
+	
+	
 # 将任意二维向量映射转为四方向动画
 # 对角输入会优先取绝对值更大的轴，避免再四方向动画里出现歧义
 func _vector_to_facing_suffix(direction:Vector2) -> StringName:

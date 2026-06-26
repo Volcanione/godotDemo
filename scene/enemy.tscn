@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ngcc7i8qmn14" path="res://script/enemy.gd" id="1_f87vc"]
 [ext_resource type="Shader" uid="uid://dif3areiibqiw" path="res://scene/blink.gdshader" id="1_h08p8"]
+[ext_resource type="AudioStream" uid="uid://cfirgar5pcrdh" path="res://resources/audio/cowboy_explosion.wav" id="3_yvcfn"]
+[ext_resource type="AudioStream" uid="uid://dx86rvqfdk3tj" path="res://resources/audio/cowboy_monsterhit.wav" id="4_ulb22"]
+[ext_resource type="AudioStream" uid="uid://dphygxnu7d4rw" path="res://resources/audio/cowboy_monsterdie.wav" id="5_1e552"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f87vc"]
 resource_local_to_scene = true
@@ -52,3 +55,14 @@ collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=1493329002]
 shape = SubResource("CircleShape2D_8u16h")
+
+[node name="AudioContainer" type="Node" parent="." unique_id=25055180]
+
+[node name="ExplodeSfxPlayer" type="AudioStreamPlayer" parent="AudioContainer" unique_id=434004408]
+stream = ExtResource("3_yvcfn")
+
+[node name="HitSfxPlayer" type="AudioStreamPlayer" parent="AudioContainer" unique_id=950826982]
+stream = ExtResource("4_ulb22")
+
+[node name="DieSfxPlayer" type="AudioStreamPlayer" parent="AudioContainer" unique_id=1392434481]
+stream = ExtResource("5_1e552")

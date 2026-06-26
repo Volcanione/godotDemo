@@ -44,6 +44,9 @@ extends Node2D
 @onready var life_count_label: Label = $HUDlayer/LifeCountLabel
 @onready var time_bar: Sprite2D = $HUDlayer/TimeBar
 @onready var result_dialog: AcceptDialog = $ResultDialog
+@onready var bgm_player: AudioStreamPlayer = $AudioContainer/BgmPlayer
+@onready var result_win_sfx_player: AudioStreamPlayer = $AudioContainer/ResultWinSfxPlayer
+@onready var result_lose_sfx_player: AudioStreamPlayer = $AudioContainer/ResultLoseSfxPlayer
 
 
 # 随机数生成器，专门用于挑选出生点和敌人配置
@@ -167,6 +170,8 @@ func _show_result_dialog(result_title:String,result_massage:String) -> void:
 	is_result_displayed = true
 	result_dialog.title = result_title
 	result_dialog.dialog_text = result_massage
+	
+	_play_result_audio(result_title)
 	_stop_world()
 	result_dialog.popup_centered()
 	
@@ -178,8 +183,31 @@ func _show_result_dialog(result_title:String,result_massage:String) -> void:
 # 统一停止刷怪，冻结场景树，让结算窗口成为唯一可交互内容
 func _stop_world() -> void:
 	enemy_spawn_timer.stop()
+	player.stop_runtime_audio()
 	Engine.time_scale = 0.0
 	get_tree().paused = true
+	
+	
+# 结算前先停止背景音乐，再播放时对应的胜利或失败音效
+func _play_result_audio(result_title:String) -> void:
+	if bgm_player.playing:
+		bgm_player.stop()
+		
+	if result_title == RESULT_TITLE_WIN:
+		Tools.play_sfx(result_win_sfx_player)
+		return
+	
+	if result_title == RESULT_TITLE_LOSE:
+		Tools.play_sfx(result_lose_sfx_player)
+		
+		
+#一次性音效统一使用“停止后重新播放”的方式，保证重复触发时能从头开始
+#func _play_sfx(audio_player:AudioStreamPlayer) -> void:
+	#if audio_player == null or audio_player.stream == null:
+		#return
+		#
+	#audio_player.stop()
+	#audio_player.play()
 	
 #结算窗口的所有关闭路径都统一结束游戏，保持单局流程最简
 func _on_result_dialog_exit_requested() -> void:
