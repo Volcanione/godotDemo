@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b1w5v55yqoxbq" path="res://resources/texture/瓦片.png" id="1_itxqv"]
 [ext_resource type="Texture2D" uid="uid://b3251p8crithg" path="res://resources/texture/动态瓦片.png" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://ctc2dmbihlxq0" path="res://scene/Character.tscn" id="3_wp4xf"]
+[ext_resource type="Texture2D" uid="uid://b7j63b4lp4jnl" path="res://resources/texture/道具ui.png" id="6_p1hux"]
+[ext_resource type="FontFile" uid="uid://21aju0xfx2ue" path="res://resources/font/IPix.ttf" id="7_of57s"]
 [ext_resource type="PackedScene" uid="uid://d05llp8d0spya" path="res://scene/canvas_layer.tscn" id="8_of57s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0l8b"]
@@ -153,3 +155,40 @@ shape = SubResource("SegmentShape2D_0ha60")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBoundary" unique_id=629643348]
 shape = SubResource("SegmentShape2D_4j5ol")
+
+[node name="HUDlayer" type="Node2D" parent="." unique_id=990386689]
+
+[node name="LifeIcon" type="Sprite2D" parent="HUDlayer" unique_id=396755464]
+position = Vector2(-48, 8)
+texture = ExtResource("6_p1hux")
+region_enabled = true
+region_rect = Rect2(0, 18, 16, 11)
+
+[node name="LifeCountLabel" type="Label" parent="HUDlayer" unique_id=1579266788]
+offset_left = -35.0
+offset_top = -2.0
+offset_right = 5.0
+offset_bottom = 21.0
+theme_override_fonts/font = ExtResource("7_of57s")
+text = "x5"
+
+[node name="TimeIcon" type="Sprite2D" parent="HUDlayer" unique_id=1102563843]
+position = Vector2(12, -14)
+texture = ExtResource("6_p1hux")
+region_enabled = true
+region_rect = Rect2(3, 2, 11, 13)
+
+[node name="TimeBar" type="Sprite2D" parent="HUDlayer" unique_id=855954231]
+position = Vector2(48, -13)
+texture = ExtResource("6_p1hux")
+region_enabled = true
+region_rect = Rect2(16, 6, 48, 7)
+
+[node name="ResultDialog" type="AcceptDialog" parent="." unique_id=1824735395]
+process_mode = 2
+oversampling_override = 1.0
+title = "游戏结束"
+position = Vector2i(0, 36)
+size = Vector2i(200, 100)
+unresizable = true
+ok_button_text = "好了"
